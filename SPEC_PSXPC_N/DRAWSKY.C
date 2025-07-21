@@ -44,7 +44,7 @@ void DrawSkyMesh(short* mesh)
 	mesh += 6;
 	a1 = v0 >> 16;
 	v0 &= 0xFF;
-	a1 += (int)mesh;
+	a1 += (uintptr_t)mesh; // riga 47
 	a2 = &scratchPad[0];
 	at = v0 << 3;
 	v1 = v0;
@@ -116,13 +116,13 @@ loc_7DD84:
 			t1 = ((int*)a1)[0];
 			v0--;
 			t4 = (t1 >> 22) & 0x3FC;
-			t4 += (int)a0;
+			t4 += (uintptr_t)a0;   // riga 119
 			t8 = (t1 >> 14) & 0x3FC;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;   // riga 121
 			t7 = (t1 >> 6) & 0x3FC;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;   // riga 123
 			t6 = (t1 << 2) & 0x3FC;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;   // riga 125
 
 			SXY0 = ((int*)t6)[0];
 			SXY1 = ((int*)t7)[0];
@@ -147,7 +147,7 @@ loc_7DD84:
 
 				if (at == 0)
 				{
-					t5 += (int)a22;
+					t5 += (uintptr_t)a22;  // riga 150
 
 #if defined(USE_32_BIT_ADDR)
 					((int*)s5)[3] = SXY0;
@@ -225,7 +225,7 @@ loc_7DD84:
 					s5 += sizeof(POLY_GT4);
 #else
 					((int*)s5)[0] = t2;
-					s6 = (int)s5;
+					s6 = (uintptr_t)s5;
 					s5 += 0x34;
 #endif
 				}//loc_7DEB4

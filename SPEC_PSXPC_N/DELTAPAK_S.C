@@ -11,6 +11,7 @@
 #include "SPHERES.H"
 #include "CONTROL.H"
 #include "LIGHT.H"
+#include <stdint.h>
 
 void CalcActorLighting()
 {
@@ -23,7 +24,7 @@ void CalcActorLighting()
 	mPushUnitMatrix();
 	mSetTrans(0, 0, 0);
 	mTranslateXYZ(temp_rotation_buffer[6], temp_rotation_buffer[7], temp_rotation_buffer[8]);
-	s1[3] = (int)&temp_rotation_buffer[9];
+	s1[3] = (uintptr_t)&temp_rotation_buffer[9];
 	mRotSuperPackedYXZ((short**)&s1[3], 0);
 
 	s1[0] = TRX + duff_item.pos.x_pos;

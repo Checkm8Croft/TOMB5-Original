@@ -625,7 +625,7 @@ int InitSubDiv(int* scratchPad, int* t0, int* t1, int t2, int t3, int t6, int s4
 	*fp = t2 & at;
 	*gp = t3 & at;
 	s3 = *t1;
-	*t0 = (int)&scratchPad[0];
+	*t0 = (uintptr_t)&scratchPad[0];
 	at = 0xFF000000;
 	at &= t6;
 	*t1 = GFC;
@@ -634,7 +634,7 @@ int InitSubDiv(int* scratchPad, int* t0, int* t1, int t2, int t3, int t6, int s4
 	((short*)*t0)[9] = t2;
 	((int*)*t0)[1] = s4;
 	s4 = (*t1 << 3) & 0x7F8;
-	s4 += (int)s7;
+	s4 += (uintptr_t)s7;
 	t6 = ((int*)s4)[0];
 	t2 = ((short*)s4)[2];
 	((int*)*t0)[3] = t6;
@@ -644,7 +644,7 @@ int InitSubDiv(int* scratchPad, int* t0, int* t1, int t2, int t3, int t6, int s4
 	((short*)*t0)[19] = t3;
 	((int*)*t0)[6] = s5;
 	s5 = (*t1 >> 5) & 0x7F8;
-	s5 += (int)s7;
+	s5 += (uintptr_t)s7;
 	t7 = ((int*)s5)[0];
 	t3 = ((short*)s5)[2];
 	((int*)*t0)[8] = t7;
@@ -678,10 +678,10 @@ int SubDiv(int s4, int s6, int t9, int s5, int s7)
 	{
 		t1 = ((short*)s4)[0];
 		s4 += 2;
-		t0 = t1 & 0xFF;
-		t0 += s6;///@INFO original is |= s6 but because scratch pad is not 0x1F800000 it is randomised in Win32 we have to add.
-		t1 >>= 8;
-		t1 += s6;///@INFO original is |= s6 but because scratch pad is not 0x1F800000 it is randomised in Win32 we have to add.
+		t0 = (uintptr_t)(t1 & 0xFF);
+		t0 += (uintptr_t)s6;//@INFO original is |= s6 but because scratch pad is not 0x1F800000 it is randomised in Win32 we have to add.
+		t1 = (uintptr_t)(t1 >> 8);
+		t1 += (uintptr_t)s6; //@INFO original is |= s6 but because scratch pad is not 0x1F800000 it is randomised in Win32 we have to add.
 		t2 = ((short*)t0)[6];
 		t3 = ((short*)t0)[7];
 		t4 = ((short*)t0)[8];
@@ -750,25 +750,25 @@ void IniPrim(int at, int t6, int t7, int t8, int fp, int gp, char* s0, int s4, i
 	t7 |= gp;
 
 #if defined(USE_32_BIT_ADDR)
-	((int*)s0)[2] = t1;
-	((int*)s0)[3] = s4;
-	((int*)s0)[4] = t6;
-	((int*)s0)[5] = t2;
-	((int*)s0)[6] = s5;
-	((int*)s0)[7] = t7;
-	((int*)s0)[8] = t3;
-	((int*)s0)[9] = s6;
-	((int*)s0)[10] = t88;
+	((uintptr_t*)s0)[2] = (uintptr_t)t1;
+	((uintptr_t*)s0)[3] = (uintptr_t)s4;
+	((uintptr_t*)s0)[4] = (uintptr_t)t6;
+	((uintptr_t*)s0)[5] = (uintptr_t)t2;
+	((uintptr_t*)s0)[6] = (uintptr_t)s5;
+	((uintptr_t*)s0)[7] = (uintptr_t)t7;
+	((uintptr_t*)s0)[8] = (uintptr_t)t3;
+	((uintptr_t*)s0)[9] = (uintptr_t)s6;
+	((uintptr_t*)s0)[10] = (uintptr_t)t88;
 #else
-	((int*)s0)[1] = t1;
-	((int*)s0)[2] = s4;
-	((int*)s0)[3] = t6;
-	((int*)s0)[4] = t2;
-	((int*)s0)[5] = s5;
-	((int*)s0)[6] = t7;
-	((int*)s0)[7] = t3;
-	((int*)s0)[8] = s6;
-	((int*)s0)[9] = t88;
+	((uintptr_t*)s0)[1] = (uintptr_t)t1;
+	((uintptr_t*)s0)[2] = (uintptr_t)s4;
+	((uintptr_t*)s0)[3] = (uintptr_t)t6;
+	((uintptr_t*)s0)[4] = (uintptr_t)t2;
+	((uintptr_t*)s0)[5] = (uintptr_t)s5;
+	((uintptr_t*)s0)[6] = (uintptr_t)t7;
+	((uintptr_t*)s0)[7] = (uintptr_t)t3;
+	((uintptr_t*)s0)[8] = (uintptr_t)s6;
+	((uintptr_t*)s0)[9] = (uintptr_t)t88;
 #endif
 	t1 = OTZ;
 
@@ -816,7 +816,7 @@ char* SubDiv4(int t0, int t1, int t2, int t3, int t6, int s4, int* s7, int t7, i
 
 	((int*)&scratchPad[0])[15] = t9;
 	((short*)&scratchPad[0])[39] = t5;
-	((int*)&scratchPad[0])[16] = (int)s2;
+	((uintptr_t*)&scratchPad[0])[16] = (uintptr_t)s2;
 	t1 >>= 21;
 	t1 &= 0x7F8;
 	s77 += t1;
@@ -825,9 +825,9 @@ char* SubDiv4(int t0, int t1, int t2, int t3, int t6, int s4, int* s7, int t7, i
 	((int*)&scratchPad[0])[18] = t9;
 	((short*)&scratchPad[0])[38] = t5;
 
-	s4 = (int)&div4tab[0];
-	s5 = (int)&scratchPad[0] + 0x50;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
-	s6 = (int)&scratchPad[0];
+	s4 = (uintptr_t)&div4tab[0];
+	s5 = (uintptr_t)&scratchPad[0] + 0x50;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
+	s6 = (uintptr_t)&scratchPad[0];
 	s77 = 4;
 	t9 = 0xFEFEFEFE;
 	t0 = SubDiv(s4, s6, t9, s5, s77);
@@ -840,7 +840,7 @@ char* SubDiv4(int t0, int t1, int t2, int t3, int t6, int s4, int* s7, int t7, i
 		if ((unsigned long)s0 < (unsigned long)s1)
 		{
 			t99 = ((unsigned int*)t0)[-1];
-			at = (int)&scratchPad[0];
+			at = (uintptr_t)&scratchPad[0];
 
 			t6 = t99 & 0xFF;
 			t6 += at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
@@ -919,9 +919,9 @@ char* SubDiv3(int t0, int t1, int t2, int t3, int t6, int s4, int* s7, int t7, i
 	((int*)&scratchPad[0])[2] = SZ1;
 	((int*)&scratchPad[0])[7] = SZ2;
 	((int*)&scratchPad[0])[12] = SZ3;
-	s4 = (int)&div3tab[0];
-	s5 = (int)&scratchPad[0] + 0x3C;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
-	s6 = (int)&scratchPad[0];
+	s4 = (uintptr_t)&div3tab[0];
+	s5 = (uintptr_t)&scratchPad[0] + 0x3C;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
+	s6 = (uintptr_t)&scratchPad[0];
 	s77 = 2;
 	t9 = 0xFEFEFEFE;
 	t0 = SubDiv(s4, s6, t9, s5, s77);
@@ -936,12 +936,12 @@ char* SubDiv3(int t0, int t1, int t2, int t3, int t6, int s4, int* s7, int t7, i
 			t9 = ((int*)t0)[-1];
 			at = &scratchPad[0];
 			t6 = t9 & 0xFF;
-			t6 += (int)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
+			t6 += (uintptr_t)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
 			t7 = t9 >> 8;
 			t7 &= 0xFF;
-			t7 += (int)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
+			t7 += (uintptr_t)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
 			t8 = t9 >> 16;
-			t8 += (int)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
+			t8 += (uintptr_t)at;///@INFO original is |= but since we don't actually use scratch base on win32 we have to add
 
 			SZ1 = ((int*)t6)[2];
 			SZ2 = ((int*)t7)[2];
@@ -1007,17 +1007,17 @@ loc_7E420:
 		t1 = a1[0];
 
 		v0--;
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			GFC = t1;
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -1068,9 +1068,9 @@ loc_7E420:
 						t2 = ((int*)t5)[0];
 						t3 = ((int*)t5)[1];
 						t2 -= at;
-						t1 += (int)a3;
+						t1 += (uintptr_t)a3;
 
-						s0 = SubDiv3(t0, t1, t2, t3, t6, s4, (int*)s7, t7, s5, t8, t4, s6, s0, s1, (int)a3);
+						s0 = SubDiv3(t0, t1, t2, t3, t6, s4, (int*)s7, t7, s5, t8, t4, s6, s0, s1, (uintptr_t)a3);
 
 					}//loc_7E4FC
 				}//loc_7E4FC
@@ -1118,11 +1118,11 @@ loc_7E420:
 
 			t9 = (t1 >> 21) & 0x7F8;
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -1132,7 +1132,7 @@ loc_7E420:
 			SXY1 = s5;
 			SXY2 = s6;
 
-			t9 += (int)a0;
+			t9 += (uintptr_t)a0;
 			t5 = t0 & 0xFFF;
 			docop2(0x1400006);
 			s7 = ((int*)t9)[0];
@@ -1182,9 +1182,9 @@ loc_7E420:
 						t3 = ((int*)t5)[1];
 						t5 = ((int*)t5)[3];
 						t2 -= at;
-						t1 += (int)a3;
+						t1 += (uintptr_t)a3;
 
-						s0 = SubDiv4(t0, t1, t2, t3, t6, s4, (int*)s7, t7, s5, t8, t4, s6, s0, s1, (int)a3, t9, t5);
+						s0 = SubDiv4(t0, t1, t2, t3, t6, s4, (int*)s7, t7, s5, t8, t4, s6, s0, s1, (uintptr_t)a3, t9, t5);
 					}
 					//loc_7E634
 				}//loc_7E634
@@ -1243,7 +1243,7 @@ void DrawClippedMesh(int v0, int* a1, char* s0, char* s1, int a0, int s7, int a2
 
 		v0--;
 
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			t8 = (t1 >> 13) & 0x7F8;
 			t8 += (int)a0;
@@ -1303,7 +1303,7 @@ void DrawClippedMesh(int v0, int* a1, char* s0, char* s1, int a0, int s7, int a2
 
 #if defined(USE_32_BIT_ADDR)
 						t1 *= 2;
-						t1 += (int)a3;
+						t1 += (uintptr_t)a3;
 						t2 = ((int*)t1)[0];
 						t2 |= gp;
 						setlen(s0, 9);
@@ -1354,7 +1354,7 @@ void DrawClippedMesh(int v0, int* a1, char* s0, char* s1, int a0, int s7, int a2
 		t1 = ((int*)a1)[0];
 
 		v0--;
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			t9 = (t1 >> 21) & 0x7F8;
 			t8 = (t1 >> 13) & 0x7F8;
@@ -1421,7 +1421,7 @@ void DrawClippedMesh(int v0, int* a1, char* s0, char* s1, int a0, int s7, int a2
 
 #if defined(USE_32_BIT_ADDR)
 						t1 *= 2;
-						t1 += (int)a3;
+						t1 += (uintptr_t)a3;
 						t2 = ((int*)t1)[0];
 						t2 |= gp;
 						setlen(s0, 12);
@@ -1474,12 +1474,12 @@ void DrawMesh_Env(int gp, int at, int v0, int a1, int* s0, int* s1, int* a0, int
 	int t9;
 
 	//loc_7F340
-	t7 = (int)&mesh_base;
+	t7 = (uintptr_t)&mesh_base;
 	at >>= 10;
 	at &= 3;
 	at <<= 3;
 	t7 += at;
-	t7 = (int)&envmap_data[0];//Im sure the above is doing some pointer fuckery here to obtain this address
+	t7 = (uintptr_t)&envmap_data[0];//Im sure the above is doing some pointer fuckery here to obtain this address
 	t8 = ((int*)t7)[1];
 	t7 = ((int*)t7)[0];
 	RGB1 = t8;
@@ -1500,16 +1500,16 @@ void DrawMesh_Env(int gp, int at, int v0, int a1, int* s0, int* s1, int* a0, int
 		t1 = ((int*)a1)[0];
 		v0--;
 
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			RGB0 = t1;
 			s2 = (t1 >> 27) & 0x1E;
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -1634,17 +1634,17 @@ loc_7F4BC:
 	t1 = ((int*)a1)[0];
 
 	v0--;
-	if ((unsigned int)s0 < (unsigned int)s1)
+	if ((uintptr_t)s0 < (uintptr_t)s1)
 	{
 		RGB0 = t1;
 		s2 = (t0 >> 11) & 0x1E;
 		t9 = (t1 >> 21) & 0x7F8;
 		t8 = (t1 >> 13) & 0x7F8;
-		t8 += (int)a0;
+		t8 += (uintptr_t)a0;
 		t7 = (t1 >> 5) & 0x7F8;
-		t7 += (int)a0;
+		t7 += (uintptr_t)a0;
 		t6 = (t1 << 3) & 0x7F8;
-		t6 += (int)a0;
+		t6 += (uintptr_t)a0;
 
 		s4 = ((int*)t6)[0];
 		s5 = ((int*)t7)[0];
@@ -1654,7 +1654,7 @@ loc_7F4BC:
 		SXY1 = s5;
 		SXY2 = s6;
 
-		t9 += (int)a0;
+		t9 += (uintptr_t)a0;
 		t5 = t0 & 0xFFF;
 		docop2(0x1400006);
 		s7 = ((int*)t9)[0];
@@ -2379,7 +2379,7 @@ void phd_PutPolygons_normal(short* mesh, short clip)//(F)
 	}
 
 	//loc_7EF28
-	a1 += (int)mesh;
+	a1 += (uintptr_t)mesh;
 	if (v0 < a22)
 	{
 		//loc_7EF40
@@ -2535,7 +2535,7 @@ void phd_PutPolygons_normal(short* mesh, short clip)//(F)
 
 	if (at)
 	{
-		DrawMesh_Env(gp, at, v0, a1, (int*)s0, (int*)s1, a0, (int)a2, t2, fp, t3, (int)a3, (int)s3);
+		DrawMesh_Env(gp, at, v0, a1, (int*)s0, (int*)s1, a0, (uintptr_t)a2, t2, fp, t3, (uintptr_t)a3, (uintptr_t)s3);
 		return;///@TODO verify
 	}
 
@@ -2544,14 +2544,14 @@ void phd_PutPolygons_normal(short* mesh, short clip)//(F)
 
 	if (s6 && s4 < 0)
 	{
-		DrawSubDivMesh(v0, (int*)a1, s0, s1, a0, (int)a2, t2, fp, a3);
+		DrawSubDivMesh(v0, (int*)a1, s0, s1, a0, (uintptr_t)a2, t2, fp, a3);
 		return;
 	}
 
 	//loc_7F0A8
 	if (s5 < 0)
 	{
-		DrawClippedMesh(v0, (int*)a1, s0, s1, (int)a0, (int)s7, (int)a2, t2, fp, t3, a3);
+		DrawClippedMesh(v0, (int*)a1, s0, s1, (uintptr_t)a0, (uintptr_t)s7, (uintptr_t)a2, t2, fp, t3, a3);
 		return;///@TODO verify
 	}
 
@@ -2569,14 +2569,14 @@ loc_7F0C0:
 loc_7F0C8:
 		t1 = ((int*)a1)[0];
 		v0--;
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -2608,7 +2608,7 @@ loc_7F0C8:
 			if (at >= 0)
 			{
 				t5 <<= 4;
-				t5 += (int)a2;
+				t5 += (uintptr_t)a2;
 				t1 = OTZ;
 
 				if (t1 < 0xA02 && t1 >= 0x21)
@@ -2628,7 +2628,7 @@ loc_7F0C8:
 
 #if defined(USE_32_BIT_ADDR)
 					t1 *= 2;
-					t1 += (int)a3;
+					t1 += (uintptr_t)a3;
 					t2 = ((int*)t1)[0];
 					t2 |= gp;
 					setlen(s0, 9);
@@ -2677,15 +2677,15 @@ loc_7F1DC:
 		t1 = ((int*)a1)[0];
 		v0--;
 
-		if ((unsigned int)s0 < (unsigned int)s1)
+		if ((uintptr_t)s0 < (uintptr_t)s1)
 		{
 			t9 = (t1 >> 21) & 0x7F8;
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -2695,7 +2695,7 @@ loc_7F1DC:
 			SXY1 = s5;
 			SXY2 = s6;
 
-			t9 += (int)a0;
+			t9 += (uintptr_t)a0;
 
 			docop2(0x1400006);
 
@@ -2718,7 +2718,7 @@ loc_7F1DC:
 
 			if (at >= 0)
 			{
-				t5 += (int)a2;
+				t5 += (uintptr_t)a2;
 				t2 = t9 >> 7;
 				t1 = OTZ;
 				t2 &= fp;
@@ -2745,7 +2745,7 @@ loc_7F1DC:
 
 #if defined(USE_32_BIT_ADDR)
 					t1 *= 2;
-					t1 += (int)a3;
+					t1 += (uintptr_t)a3;
 					t2 = ((int*)t1)[0];
 					t2 |= gp;
 					setlen(s0, 12);
@@ -3184,7 +3184,7 @@ void phd_PutPolygons_seethrough(short* mesh, unsigned char shade)
 	v0 = ((int*)mesh)[2];
 	mesh += 6;
 	s6 = v0;
-	a1 = (int)&mesh[v0 >> 17];
+	a1 = (uintptr_t)&mesh[v0 >> 17];
 	v1 = v0 & 0x8000;
 	v0 &= 0xFF;
 
@@ -3272,7 +3272,7 @@ void phd_PutPolygons_seethrough(short* mesh, unsigned char shade)
 	t4 = ((int*)mesh)[4];
 	t5 = ((int*)mesh)[5];
 
-	RFC = (unsigned int)mesh;
+	RFC = (uintptr_t)mesh;
 
 	//loc_7FC0C
 	do
@@ -3343,13 +3343,13 @@ void phd_PutPolygons_seethrough(short* mesh, unsigned char shade)
 		{
 
 			t8 = (t1 >> 13) & 0x7F8;
-			t8 += (int)a0;
+			t8 += (uintptr_t)a0;
 
 			t7 = (t1 >> 5) & 0x7F8;
-			t7 += (int)a0;
+			t7 += (uintptr_t)a0;
 
 			t6 = (t1 << 3) & 0x7F8;
-			t6 += (int)a0;
+			t6 += (uintptr_t)a0;
 
 			s4 = ((int*)t6)[0];
 			s5 = ((int*)t7)[0];
@@ -3379,7 +3379,7 @@ void phd_PutPolygons_seethrough(short* mesh, unsigned char shade)
 			if (at >= 0)
 			{
 				t5 <<= 4;
-				t5 += (int)a2;
+				t5 += (uintptr_t)a2;
 				t1 = OTZ;
 
 				if (t1 < 0xA02 && t1 >= 0x21)
@@ -3397,7 +3397,7 @@ void phd_PutPolygons_seethrough(short* mesh, unsigned char shade)
 #if defined(USE_32_BIT_ADDR)
 					t1 *= 2;
 #endif
-					t1 += (int)a3;
+					t1 += (uintptr_t)a3;
 					at = 0xFF9FFFFF;
 					t3 &= at;
 					at = 0x200000;
@@ -3462,11 +3462,11 @@ loc_7FDE8:
 	{
 		t9 = t1 >> 21;
 		t8 = (t1 >> 13) & 0x7F8;
-		t8 += (int)a0;
+		t8 += (uintptr_t)a0;
 		t7 = (t1 >> 5) & 0x7F8;
-		t7 += (int)a0;
+		t7 += (uintptr_t)a0;
 		t6 = (t1 << 3) & 0x7F8;
-		t6 += (int)a0;
+		t6 += (uintptr_t)a0;
 
 		s4 = ((int*)t6)[0];
 		s5 = ((int*)t7)[0];
@@ -3477,7 +3477,7 @@ loc_7FDE8:
 		SXY2 = s6;
 
 		t9 &= 0x7F8;
-		t9 += (int)a0;
+		t9 += (uintptr_t)a0;
 		docop2(0x1400006);
 
 		t6 = ((int*)t6)[1];
@@ -3498,7 +3498,7 @@ loc_7FDE8:
 
 		if (at >= 0)
 		{
-			t5 += (int)a2;
+			t5 += (uintptr_t)a2;
 			t2 = t9 >> 7;
 			t1 = OTZ;
 			t2 &= fp;
@@ -3525,7 +3525,7 @@ loc_7FDE8:
 #if defined(USE_32_BIT_ADDR)
 				t1 *= 2;
 #endif
-				t1 += (int)a3;
+				t1 += (uintptr_t)a3;
 				at = 0x3E000000;
 				t6 |= at;
 				at = 0xFF9FFFFF;

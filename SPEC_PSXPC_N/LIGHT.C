@@ -527,7 +527,7 @@ loc_85D34:
 							s6 = s5;
 							s5 = s4;
 							s4 = a33;
-							at = (int)s3;
+							at = (uintptr_t)s3;
 							s3 = s2;
 							s2 = s1;
 							s1 = (int*)at;
@@ -538,7 +538,7 @@ loc_85D34:
 							//loc_85EFC
 							s6 = s5;
 							s5 = a33;
-							at = (int)s3;
+							at = (uintptr_t)s3;
 							s3 = s2;
 							s2 = (int*)at;
 							//j loc_85F2C
@@ -547,7 +547,7 @@ loc_85D34:
 						{
 							//loc_85F1C
 							s6 = a33;
-							at = (int)s3;
+							at = (uintptr_t)s3;
 						}
 						else
 						{
@@ -675,7 +675,7 @@ loc_85FD4:
 					s6 = s5;
 					s5 = s4;
 					s4 = a33;
-					at = (int)s3;
+					at = (uintptr_t)s3;
 					s3 = s2;
 					s2 = s1;
 					s1 = (int*)at;
@@ -685,7 +685,7 @@ loc_85FD4:
 				{
 					s6 = s5;
 					s5 = a33;
-					at = (int)s3;
+					at = (uintptr_t)s3;
 					s3 = s2;
 					s2 = (int*)at;
 					//goto loc_860EC
@@ -694,7 +694,7 @@ loc_85FD4:
 				{
 					//loc_860DC
 					s6 = a33;
-					at = (int)s3;
+					at = (uintptr_t)s3;
 				}
 				else
 				{
@@ -729,14 +729,14 @@ loc_85FD4:
 	}
 	//loc_86120
 	t00[0] = s4;
-	t00[1] = (int)s1;
+	t00[1] = (uintptr_t)s1;
 	t00[7] = s5;
-	t00[8] = (int)s2;
+	t00[8] = (uintptr_t)s2;
 	t00[14] = s6;
-	t00[15] = (int)s3;
+	t00[15] = (uintptr_t)s3;
 
 	s66 = t00;
-	s5 = (int)light;
+	s5 = (uintptr_t)light;
 
 	s11 = SXY0;
 	s22 = SXY1;

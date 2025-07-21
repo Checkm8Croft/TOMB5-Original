@@ -203,7 +203,7 @@ int* SubPolyGT4RL3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//
 	int att = 0;
 //    int t00;
 
-    t0 = SubPolyGTLoopRL3(5, t0, t1, (int)s1);
+    t0 = SubPolyGTLoopRL3(5, t0, t1, (uintptr_t)s1);
 
     gp = 3;
     t1 = (int*)RGB2;
@@ -219,12 +219,12 @@ int* SubPolyGT4RL3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//
         t4 = t3 >> 16;
         t3 &= 0xFFFF;
 
-        t3 += (int)s1;
-        t4 += (int)s1;
+        t3 += (uintptr_t)s1;
+        t4 += (uintptr_t)s1;
         t6 = t5 >> 16;
         t5 &= 0xFFFF;
-        t5 += (int)s1;
-        t6 += (int)s1;
+        t5 += (uintptr_t)s1;
+        t6 += (uintptr_t)s1;
 
         SXY0 = ((int*)t4)[0];
         SXY1 = ((int*)t6)[0];
@@ -273,7 +273,7 @@ int* SubPolyGT4RL3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//
                 s3 = 1;
                 s4 = gp;
                 s5 = ra;
-                s6 = (int)t0;
+                s6 = (uintptr_t)t0;
                 a3 = SubPolyGT4RL3((int*)&QuadVertTables[gp], &s1[231], s1, a3, s0, s3, fp);
                 t1 = (int*)RGB2;
                 t2 = RGB1;
@@ -308,7 +308,7 @@ int* SubPolyGT4RL3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//
                 if (at == 0)
                 {
                     t2 = RGB1;
-                    SubdivSetup3RL3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (int)t1, t2);
+                    SubdivSetup3RL3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (uintptr_t)t1, t2);
                     t5 = ((int*)t6)[0];
                     t7 = ((int*)t6)[4];
                     t8 = ((unsigned short*)t6)[7];
@@ -348,7 +348,7 @@ char* SubPolyGT3RL3(int* t0, int* t1, int* s1, int* a3, int s3, int fp, int s0)
     int s4;
     int s6;
 
-    t0 = SubPolyGTLoopRL3(3, t0, t1, (int)s1);
+    t0 = SubPolyGTLoopRL3(3, t0, t1, (uintptr_t)s1);
     gp = 3;
     t1 = (int*)RGB2;
     t2 = RGB1;
@@ -362,9 +362,9 @@ char* SubPolyGT3RL3(int* t0, int* t1, int* s1, int* a3, int s3, int fp, int s0)
         t4 = t3 >> 16;
         t3 &= 0xFFFF;
 
-        t3 += (int)s1;
-        t4 += (int)s1;
-        t5 += (int)s1;
+        t3 += (uintptr_t)s1;
+        t4 += (uintptr_t)s1;
+        t5 += (uintptr_t)s1;
 
         SXY0 = ((int*)t3)[0];
         SXY1 = ((int*)t4)[0];
@@ -403,7 +403,7 @@ char* SubPolyGT3RL3(int* t0, int* t1, int* s1, int* a3, int s3, int fp, int s0)
             {
                 s3 = 1;
                 s4 = gp;
-                s6 = (int)t0;
+                s6 = (uintptr_t)t0;
                 a3 = (int*)SubPolyGT3RL3((int*)&TriVertTables[gp], &s1[216], s1, a3, s3, fp, s0);
                 t1 = (int*)RGB2;
                 t2 = RGB1;
@@ -427,7 +427,7 @@ char* SubPolyGT3RL3(int* t0, int* t1, int* s1, int* a3, int s3, int fp, int s0)
                     if (at == 0)
                     {
                         t2 = RGB1;
-                        SubdivSetup3RL3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (int)t1, t2);
+                        SubdivSetup3RL3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (uintptr_t)t1, t2);
                         MyAddPrimRL3(0x9000000, &t9, &s0, a3);
                         a3 += sizeof(POLY_GT3) / sizeof(unsigned long);
                     }
@@ -718,8 +718,8 @@ char* DrawMeshRL3(int* sp, int* sp2, int mesh, struct DB_STRUCT* cdb)
     LR1 = mesh & 0xFFFF;
     LR2 = (mesh >> 16) & 0xFFFF;
     DQA = v0;
-    LG2 = (unsigned int)cdb & 0xFFFF;
-    LG3 = ((unsigned int)cdb >> 16) & 0xFFFF;
+    LG2 = (uintptr_t)cdb & 0xFFFF;
+    LG3 = ((uintptr_t)cdb >> 16) & 0xFFFF;
     v0 &= 0xFF;
 
     //loc_1320
@@ -845,18 +845,18 @@ char* DrawMeshRL3(int* sp, int* sp2, int mesh, struct DB_STRUCT* cdb)
 
                 if (t6 < 0x3FF)
                 {
-                    t6 += (int)s5;
+                    t6 += (uintptr_t)s5;
                     t6 = ((char*)t6)[0];
                     t9 &= 0xFF;
 
                     if (t6 < t9)
                     {
                         t9 <<= 1;
-                        t9 += (int)s0;
+                        t9 += (uintptr_t)s0;
                         t9 = ((short*)t9)[0];
                         t6 <<= 5;
                         t6 += t9;
-                        t6 += (int)s1;
+                        t6 += (uintptr_t)s1;
                         a3 += t6;
                         v1 += t6;
                         a1 += t6;
@@ -953,9 +953,9 @@ loc_15A8:
         s77 = 0;
         DQB = t0;
 
-        s66 = ((t0 >> 11) & 0x3F8) + (int)s1;
-        s55 = ((t0 >> 4) & 0x3F8) + (int)s1;
-        s44 = ((t0 << 3) & 0x3F8) + (int)s1;
+        s66 = ((t0 >> 11) & 0x3F8) + (uintptr_t)s1;
+        s55 = ((t0 >> 4) & 0x3F8) + (uintptr_t)s1;
+        s44 = ((t0 << 3) & 0x3F8) + (uintptr_t)s1;
 
         t1 = ((int*)s44)[0];
         t2 = ((int*)s55)[0];
@@ -1019,7 +1019,7 @@ loc_15A8:
                 t0 <<= 1;
                 t0 += t7;
                 t0 += s77;
-                t0 += (int)a22;
+                t0 += (uintptr_t)a22;
 
                 t7 = ((int*)t0)[2];
                 t8 = t7 << 8;
@@ -1051,7 +1051,7 @@ loc_15A8:
                     InitSubdivisionRL3((int*)s1, t1, s44, &fpp, t5, t2, s55, gp, t6, &t3, s66, s3, &t7, &s77);
 
                     s3 = 0;
-                    a3 = (int)SubPolyGT3RL3((int*)&TriVertTableRL3, (int*)&s1[804], (int*)s1, (int*)a3, s3, fpp, (int)s0);
+                    a3 = (uintptr_t)SubPolyGT3RL3((int*)&TriVertTableRL3, (int*)&s1[804], (int*)s1, (int*)a3, s3, fpp, (uintptr_t)s0);
                     at = BFC;
                     t0 = (LB1 & 0xFFFF) | ((LB2 & 0xFFFF) << 16);
                     t9 = DQA;
@@ -1100,12 +1100,12 @@ loc_172C:
         t4 = t1 >> 18;
         t3 = (t1 >> 11) & 0x3F8;
 
-        s66 = t3 + (int)s1;
+        s66 = t3 + (uintptr_t)s1;
         t2 = (t1 >> 4) & 0x3F8;
-        s55 = t2 + (int)s1;
+        s55 = t2 + (uintptr_t)s1;
         t1 <<= 3;
         t1 &= 0x3F8;
-        s44 = t1 + (int)s1;
+        s44 = t1 + (uintptr_t)s1;
 
         t1 = ((unsigned int*)s44)[0];
         t2 = ((unsigned int*)s55)[0];
@@ -1116,7 +1116,7 @@ loc_172C:
         SXY2 = t3;
 
         t4 &= 0x3F8;
-        s77 = t4 + (int)s1;
+        s77 = t4 + (uintptr_t)s1;
         docop2(0x1400006);
         t4 = ((unsigned int*)s77)[0];
 
@@ -1225,7 +1225,7 @@ loc_172C:
 
                     t7 = t8;
 
-                    gp = (int)InitSubdivisionRL3((int*)s1, t1, s444, &fpp, t5, t2, s555, gp, t6, &t3, s666, s3, &t7, &s777);
+                    gp = (uintptr_t)InitSubdivisionRL3((int*)s1, t1, s444, &fpp, t5, t2, s555, gp, t6, &t3, s666, s3, &t7, &s777);
 
                     t0 = DQB;
                     t5 = (LR1 & 0xFFFF) | ((LR2 & 0xFFFF) << 16);
@@ -1254,7 +1254,7 @@ loc_172C:
                     ((short*)s1)[407] = t4;
                     ((short*)s1)[408] = t5;
 
-                    a3 = (int)SubPolyGT4RL3((int*)&QuadVertTableRL3, (int*)&s1[824], (int*)s1, (int*)a3, (int)s0, s3, fpp);
+                    a3 = (uintptr_t)SubPolyGT4RL3((int*)&QuadVertTableRL3, (int*)&s1[824], (int*)s1, (int*)a3, (uintptr_t)s0, s3, fpp);
                     t0 = (LB1 & 0xFFFF) | ((LB2 & 0xFFFF) << 16);
                     at = BFC;
                     t9 = DQA;
@@ -1436,7 +1436,7 @@ void sub_158RL3(long underwater, struct room_info* r)
     S_MemSet((char*)&scratchPad[0], 0, 1024);
     S_MemSet((char*)&scratchPad2[0], 0, 2048);
     RFC = (unsigned int)underwater;
-    RGB0 = (unsigned int)r;
+    RGB0 = (uintptr_t)r;
 
     s0 = number_draw_rooms;
     s3 = (int*)RoomBBoxes;
@@ -1451,8 +1451,8 @@ void sub_158RL3(long underwater, struct room_info* r)
     fp = &room[*s4++];
     //t0 = fp->mesheffect
     t11 = &WaterTable[0][fp->MeshEffect];///@FIXME WaterTable bad values...
-    s2[0] = (unsigned int)fp;
-    s2[1] = (unsigned int)t11;
+    s2[0] = (uintptr_t)fp;
+    s2[1] = (uintptr_t)t11;
 
     s1 = (int*)fp->data;
     t0 = fp->x;
@@ -1664,7 +1664,7 @@ loc_4A0:
         t6 = RBK;
 
         t0 = (t3 << 3) & 0xFFF8;
-        t0 += (int)s3;
+        t0 += (uintptr_t)s3;
 
         t1 = ((short*)t0)[2];
         at = ((short*)t0)[0];
@@ -1679,7 +1679,7 @@ loc_4A0:
         t0 |= at;
         t3 >>= 13;
         t3 &= 0xFFF8;
-        t3 += (int)s3;
+        t3 += (uintptr_t)s3;
 
         at = ((short*)t3)[0];
         t2 = ((short*)t3)[1];
@@ -1845,12 +1845,12 @@ loc_6DC:
         t5 = ((int*)a0)[0];
         t6 = 0;
         t0 = (t5 << 3) & 0xFFF8;
-        t0 += (int)s3;
+        t0 += (uintptr_t)s3;
         t2 = ((short*)t0)[2];
         t0 = ((int*)t0)[0];
         t5 >>= 13;
         t5 &= 0xFFF8;
-        t5 += (int)s3;
+        t5 += (uintptr_t)s3;
         t3 = ((int*)t5)[0];
         t5 = ((short*)t5)[2];
         t1 = t0 >> 16;
@@ -1872,7 +1872,7 @@ loc_6DC:
 
         t7 = 1;
 
-        t8 = (int)&scratchPad[0];
+        t8 = (uintptr_t)&scratchPad[0];
         t9 = 0;
 
         dyn = &dynamics[0];//$s1
@@ -1903,7 +1903,7 @@ loc_6DC:
                         {
                             dyn->used = TRUE;
                             t9 += dyn->falloff >> 9;
-                            ((int*)t8)[0] = (int)dyn;
+                            ((int*)t8)[0] = (uintptr_t)dyn;
                             t8 += 4;
                             t6 += 1;
                         }
@@ -1949,7 +1949,7 @@ loc_6DC:
             if (a2 == 0)
                 goto loc_810;
 
-            a1 = (int)s1;
+            a1 = (uintptr_t)s1;
             t4 = t5 - 1;
 
         loc_82C:
@@ -1990,7 +1990,7 @@ loc_6DC:
                     goto loc_82C;
 
                 t7 = t0;
-                v0 = (int)&s1[-1];
+                v0 = (uintptr_t)&s1[-1];
                 v1 = a1 - 4;
                 t3 = a3;
 
@@ -2057,7 +2057,7 @@ loc_6DC:
         }//loc_970
 
         dyn = &dynamics[0];
-        a1 = (int)&scratchPad[192];
+        a1 = (uintptr_t)&scratchPad[192];
         v1 = 0xF;
         v0 = 0x40;
 

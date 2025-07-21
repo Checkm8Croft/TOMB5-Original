@@ -8,7 +8,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <malloc.h>
+#ifdef _WIN32
+  #include <malloc.h>
+#else
+  #include <stdlib.h>  // su macOS e Linux
+#endif
 
 #if defined(__ANDROID__)///@FIXME Android include order is messed up, includes SPEC_PSXPC_N MALLOC.H rather than NDK version!
 #define malloc SDL_malloc

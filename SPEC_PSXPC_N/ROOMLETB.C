@@ -360,7 +360,7 @@ int* SubPolyGT4(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 	int att = 0;
 //	int t00;
 
-	t0 = SubPolyGTLoop(5, t0, (int)s1, t1);
+	t0 = SubPolyGTLoop(5, t0, (uintptr_t)s1, t1);
 
 	gp = 3;
 	t1 = (int*)RGB2;
@@ -376,12 +376,12 @@ int* SubPolyGT4(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 		t4 = t3 >> 16;
 		t3 &= 0xFFFF;
 
-		t3 += (int)s1;
-		t4 += (int)s1;
+		t3 += (uintptr_t)s1;
+		t4 += (uintptr_t)s1;
 		t6 = t5 >> 16;
 		t5 &= 0xFFFF;
-		t5 += (int)s1;
-		t6 += (int)s1;
+		t5 += (uintptr_t)s1;
+		t6 += (uintptr_t)s1;
 
 		SXY0 = ((int*)t4)[0];
 		SXY1 = ((int*)t6)[0];
@@ -431,7 +431,7 @@ int* SubPolyGT4(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 				s3 = 1;
 				s4 = gp;
 				s5 = ra;
-				s6 = (int)t0;
+				s6 = (uintptr_t)t0;
 
 				a3 = SubPolyGT4((int*)&QuadVertTables[gp], &s1[231], s1, a3, s0, s3, fp);
 				t1 = (int*)RGB2;
@@ -485,7 +485,7 @@ int* SubPolyGT4(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 					if (at == 0)
 					{
 						t2 = RGB1;
-						SubdivSetup3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (int)t1, t2);
+						SubdivSetup3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (uintptr_t)t1, t2);
 						t5 = ((int*)t6)[0];
 						t7 = ((int*)t6)[4];
 						t8 = ((unsigned short*)t6)[7];
@@ -532,7 +532,7 @@ int* SubPolyGT3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 //	int t00;
 	int s7;
 
-	t0 = SubPolyGTLoop(3, t0, (int)s1, t1);
+	t0 = SubPolyGTLoop(3, t0, (uintptr_t)s1, t1);
 	gp = 3;
 
 	t1 = (int*)RGB2;
@@ -548,9 +548,9 @@ int* SubPolyGT3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 		t4 = t3 >> 16;
 		t3 &= 0xFFFF;
 
-		t3 += (int)s1;
-		t4 += (int)s1;
-		t5 += (int)s1;
+		t3 += (uintptr_t)s1;
+		t4 += (uintptr_t)s1;
+		t5 += (uintptr_t)s1;
 
 		SXY0 = ((int*)t3)[0];
 		SXY1 = ((int*)t4)[0];
@@ -590,7 +590,7 @@ int* SubPolyGT3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 				s4 = gp;
 				s5 = ra;
 
-				s6 = (int)t0;
+				s6 = (uintptr_t)t0;
 
 				a3 = SubPolyGT3((int*)&TriVertTables[gp], &s1[216], s1, a3, s0, s3, fp);
 
@@ -623,7 +623,7 @@ int* SubPolyGT3(int* t0, int* t1, int* s1, int* a3, int s0, int s3, int fp)//(F)
 						if (at == 0)
 						{
 							t2 = RGB1;
-							SubdivSetup3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (int)t1, t2);
+							SubdivSetup3(a3, fp, (int*)t3, (int*)t4, (int*)t5, (uintptr_t)t1, t2);
 							MyAddPrim(0x9000000, &t9, &s0, a3);
 							a3 += sizeof(POLY_GT4) / sizeof(unsigned long);
 						}
@@ -927,12 +927,12 @@ int DrawMesh(int* a0, struct DB_STRUCT* dbs, int* sp, int* sp2)//(F)
 	v0 = ((unsigned short*)a0)[3];
 	a0 += 2;
 
-	LR1 = ((unsigned int)a0) & 0xFFFF;
-	LR2 = (((unsigned int)a0) >> 16) & 0xFFFF;
-	DQA = (int)(short)v0;
+	LR1 = ((uintptr_t)a0) & 0xFFFF;
+	LR2 = (((uintptr_t)a0) >> 16) & 0xFFFF;
+	DQA = (uintptr_t)(short)v0;
 
-	LG2 = ((unsigned int)dbs) & 0xFFFF;
-	LG3 = (((unsigned int)dbs) >> 16) & 0xFFFF;
+	LG2 = ((uintptr_t)dbs) & 0xFFFF;
+	LG3 = (((uintptr_t)dbs) >> 16) & 0xFFFF;
 
 	v0 &= 0xFF;
 
@@ -1064,18 +1064,18 @@ int DrawMesh(int* a0, struct DB_STRUCT* dbs, int* sp, int* sp2)//(F)
 
 				if (t6 < 0x3FF != 0)
 				{
-					t6 += (int)s5;
+					t6 += (uintptr_t)s5;
 					t6 = ((char*)t6)[0];
 					t9 &= 0xFF;
 
 					if (t6 < t9)
 					{
 						t9 <<= 1;
-						t9 += (int)s0;
+						t9 += (uintptr_t)s0;
 						t9 = ((short*)t9)[0];
 						t6 <<= 5;
 						t6 += t9;
-						t6 += (int)s1;
+						t6 += (uintptr_t)s1;
 						a3 += t6;
 						v1 += t6;
 						a1 += t6;
@@ -1239,7 +1239,7 @@ loc_76080:
 					t7 = t0;
 					t0 <<= 1;
 					t0 += t7;
-					t0 += (int)a22;
+					t0 += (uintptr_t)a22;
 					t7 = ((int*)t0)[2];
 					t8 = t7 << 8;
 
@@ -1268,7 +1268,7 @@ loc_76080:
 						InitSubdivision(s11, t1, s444, &fpp, t5, t2, s555, gp, t6, &t3, s666, s3, &t7, &s777);
 
 						s3 = 0;
-						a3 = (int)SubPolyGT3((int*)&TriVertTables[4], &s11[201], s11, (int*)a3, s00, s3, fpp);
+						a3 = (uintptr_t)SubPolyGT3((int*)&TriVertTables[4], &s11[201], s11, (int*)a3, s00, s3, fpp);
 
 						at = BFC;
 						t0 = (LB1 & 0xFFFF) | ((LB2 & 0xFFFF) << 16);
@@ -1426,7 +1426,7 @@ loc_761EC:
 						((short*)s11)[409] = t0;
 						t7 = t8;
 
-						gp = (int)InitSubdivision(s11, t1, s444, &fpp, t5, t2, s555, gp, t6, &t3, s666, s3, &t7, &s777);
+						gp = (uintptr_t)InitSubdivision(s11, t1, s444, &fpp, t5, t2, s555, gp, t6, &t3, s666, s3, &t7, &s777);
 
 						t0 = DQB;
 						t5 = (LR1 & 0xFFFF) | ((LR2 & 0xFFFF) << 16);
@@ -1455,7 +1455,7 @@ loc_761EC:
 						((short*)s11)[407] = t4;
 						((short*)s11)[408] = t5;
 
-						a3 = (int)SubPolyGT4((int*)& QuadVertTables[4], &s11[206], s11, (int*)a3, s00, s3, fpp);
+						a3 = (uintptr_t)SubPolyGT4((int*)& QuadVertTables[4], &s11[206], s11, (int*)a3, s00, s3, fpp);
 
 						t0 = (LB1 & 0xFFFF) | ((LB2 & 0xFFFF) << 16);
 						at = BFC;
@@ -1898,7 +1898,7 @@ loc_74F78:
 	{
 		s1++;
 		t3 = a0[0];
-		s2[0] = (int)a0;
+		s2[0] = (uintptr_t)a0;
 		t6 = RBK;
 		t00 = &s3[((t3 << 3) & 0xFFF8) >> 3];///@TODO check when not zero!
 		t1 = t00->vz;
@@ -2163,7 +2163,7 @@ loc_751B4:
 						a2 >>= 7;
 						s11->used = 1;
 						t9 += a2;
-						t88[0] = (int)s1;
+						t88[0] = (uintptr_t)s1;
 						t88++;
 						t6++;
 					}
@@ -2283,15 +2283,15 @@ loc_751B4:
 					goto loc_75304;
 				}
 
-				t2 = (int)a22;
+				t2 = (uintptr_t)a22;
 				if (t7 >= t0)
 				{
 					goto loc_75304;
 				}
 
 				t7 = t0;
-				v0 = (int)& s1[-1];
-				v1 = (int)& a1[-1];
+				v0 = (uintptr_t)& s1[-1];
+				v1 = (uintptr_t)& a1[-1];
 				t3 = a3;
 				goto loc_75304;
 			}
@@ -2302,7 +2302,7 @@ loc_751B4:
 			{
 				t1 = ((short*)t3)[8];
 				((int*)v1)[0] = 0;
-				((int*)v0)[0] = (int)t888;
+				((int*)v0)[0] = (uintptr_t)t888;
 				///@CONTINUE
 
 				if (t0 >= t1)

@@ -147,7 +147,7 @@ char cd_flags[136];
 unsigned char InGameCnt;
 struct RAT_STRUCT* Rats;
 struct BAT_STRUCT* Bats;
-struct SPIDER_STRUCT* Spiders;
+struct SPIDER_STRUCT* Spiders = NULL;
 int SetDebounce;
 short WB_room;
 struct ITEM_INFO* WB_item;

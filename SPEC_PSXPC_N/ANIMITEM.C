@@ -10,11 +10,26 @@
 #include "MATHS.H"
 #include "MISC.H"
 #include "LIGHT.H"
+#include "OBJECTS.H"
 
 #include "GTEREG.H"
 #include <assert.h>
+#include <stdint.h>
 
-void GetBounds_AI(int* t0, int* a2, int* a3, int* t1, int* t2, int* v0, int* a0, int* a1, int* t3, int* t4, int* t5)//8139C
+// extern per funzioni da altri file
+extern void mRotYXZ_AI(int x, int y, int z);
+
+// extern per variabili condivise
+extern struct static_info* static_objects;
+extern struct object_info* objects;
+
+
+
+// prototipo della funzione definita più sotto in questo file
+void GetBounds_AI(int* t0, int* a2, int* a3, int* t1, int* t2, int* v0, int* a0, int* a1, int* t3, int* t4, int* t5);
+
+// poi dopo, più avanti nel file, la definizione vera e propria
+void GetBounds_AI(int* t0, int* a2, int* a3, int* t1, int* t2, int* v0, int* a0, int* a1, int* t3, int* t4, int* t5)
 {
 	if (*t0 < *a2)
 	{
@@ -116,7 +131,7 @@ void mLoadMatrix_AI(int* a0, int* fp)//81C18(<)
 	TRY = a0[6];
 	TRZ = a0[7];
 
-	fp[20] = (int)a0;
+	fp[20] = (uintptr_t)a0;
 }
 
 void mmPushMatrix_AI(int* fp)
@@ -132,7 +147,7 @@ void mmPushMatrix_AI(int* fp)
 	a0[6] = TRY;
 	a0[7] = TRZ;
 
-	fp[20] = (int)a0;
+	fp[20] = (uintptr_t)a0;
 }
 
 
@@ -382,9 +397,9 @@ int GetFrames_AI(struct ITEM_INFO* item /*s3*/, int* fp)//81468
 
 	t3 = t1 * (anim->interpolation >> 8);
 	t4 = &anim->frame_ptr[t3];
-	fp[30] = (int)t4;
+	fp[30] = (uintptr_t)t4;
 	t5 = &anim->frame_ptr[t3 + (anim->interpolation >> 8)];
-	fp[31] = (int)t5;
+	fp[31] = (uintptr_t)t5;
 
 	if (t2 == 0)
 	{
@@ -400,6 +415,7 @@ int GetFrames_AI(struct ITEM_INFO* item /*s3*/, int* fp)//81468
 
 	return t2;
 }
+
 
 void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 {
@@ -422,11 +438,9 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 	}
 	else
 	{
-		//loc_81AD0
 		ty &= 0x7FFF;
 	}
 
-	//loc_81AD4
 	t5 = tz >> 15;
 	if (tz < 0)
 	{
@@ -438,11 +452,9 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 	}
 	else
 	{
-		//loc_81AF4
 		tz &= 0x7FFF;
 	}
 
-	//loc_81AF8
 	t3 = tx >> 15;
 	if (tx < 0)
 	{
@@ -454,16 +466,15 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 	}
 	else
 	{
-		//loc_81B18
 		tx &= 0x7FFF;
 	}
 
-	//loc_81B1C
 	IR1 = t3;
 	IR2 = t4;
 	IR3 = t5;
 
-	v0 = fp[20];
+	// qui v0 va a contenere un puntatore, quindi usa uintptr_t
+	uintptr_t v0_ptr = (uintptr_t)fp[20];
 
 	docop2(0x41E012);
 
@@ -483,7 +494,7 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 		t3 = -t3;
 		t3 <<= 3;
 		t0 = -t3;
-	}//loc_81B60
+	}
 
 	t1 = t4 << 3;
 	if (t4 < 0)
@@ -493,7 +504,6 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 		t1 = -t4;
 	}
 
-	//loc_81B74
 	t2 = t5 << 3;
 	if (t5 < 0)
 	{
@@ -501,7 +511,7 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 		t5 <<= 3;
 		t2 = -t5;
 	}
-	//loc_81B88
+
 	t3 = MAC1;
 	t4 = MAC2;
 	t5 = MAC3;
@@ -514,9 +524,10 @@ void mTranslateXYZ_AI(int tx, int ty, int tz, int* fp)//81AB0
 	TRY = t1;
 	TRZ = t2;
 
-	((int*)v0)[5] = t0;
-	((int*)v0)[6] = t1;
-	((int*)v0)[7] = t2;
+	// cast corretto per 64bit:
+	((int*)v0_ptr)[5] = t0;
+	((int*)v0_ptr)[6] = t1;
+	((int*)v0_ptr)[7] = t2;
 }
 
 
@@ -541,7 +552,7 @@ void mRotYXZ_AI(int y, int x, int z, int* fp)//818FC
 
 void calc_animating_item_clip_window(struct ITEM_INFO* item /*s3*/, unsigned short* s2, int* fp)//80DD8
 {
-	int* s1 = (int*)fp[25];
+	int* s1 = (int*)(uintptr_t)fp[25];
 	int t3 = 0;
 	int t2 = 0;
 	int t1 = 0;
@@ -549,7 +560,7 @@ void calc_animating_item_clip_window(struct ITEM_INFO* item /*s3*/, unsigned sho
 	int s5 = 0;
 	int s4 = 0;
 	int s7 = 0;
-	int v0 = 0;
+	uintptr_t v0 = 0;
 	int v1 = 0;
 	int a0 = 0;
 	int t9 = 0;
@@ -1020,7 +1031,7 @@ void InitInterpolation_AI(int* fp, int a0, int* a2)//81DF4
 	GBK = t6;
 	BBK = t7;
 
-	fp[21] = (int)a2;
+	fp[21] = (uintptr_t)a2;
 
 	a2[0] = t0;
 	a2[1] = t1;
@@ -1040,7 +1051,7 @@ void iTranslateXYZ2_AI(int x/*a0*/, int y/*a1*/, int z/*a2*/, int x2/*a3*/, int*
 	int t0 = 0;
 	int t1 = 0;
 	int t2 = 0;
-	int v0 = 0;
+	uintptr_t v0 = 0;
 	int t6 = 0;
 	int t7 = 0;
 	int t8 = 0;
@@ -1179,7 +1190,7 @@ void mRotSuperPackedYXZ_AI(int* fp)//819FC
 
 	if (at-- != 0)
 	{
-		fp[32] = (int)a2;
+		fp[32] = (uintptr_t)a2;
 
 		if (at-- != 0)
 		{
@@ -1197,7 +1208,7 @@ void mRotSuperPackedYXZ_AI(int* fp)//819FC
 	}
 	//loc_81A48
 	at = *a2++;
-	fp[32] = (int)a2;
+	fp[32] = (uintptr_t)a2;
 	a0 = v0 << 16;
 	a0 |= at;
 	v00 = a0;
@@ -1424,7 +1435,7 @@ void iRotSuperPackedYXZ_AI(int* fp)//82140
 
 	if (at-- != 0)
 	{
-		fp[33] = (int)a2;
+		fp[33] = (uintptr_t)a2;
 
 		if (at-- != 0)
 		{
@@ -1442,7 +1453,7 @@ void iRotSuperPackedYXZ_AI(int* fp)//82140
 	}
 	//loc_8218C
 	at = *a2++;
-	fp[33] = (int)a2;
+	fp[33] = (uintptr_t)a2;
 	a0 = v0 << 16;
 	a0 |= at;
 	a22 = a0;
@@ -1473,7 +1484,7 @@ void InterpolateMatrix_AI(int v1, int* fp)
 	at = &a0[9];
 	v0 = 1;
 	fp[19] = v0;
-	fp[17] = (int)at;
+	fp[17] = (uintptr_t)at;
 	a0++;
 
 	a2 = fp[20];
@@ -1687,7 +1698,7 @@ void iPushMatrix_AI(int* fp)//81E60
 	a0[5] = RBK;
 	a0[6] = GBK;
 	a0[7] = BBK;
-	fp[21] = (int)a0;
+	fp[21] = (uintptr_t)a0;
 }
 
 void iPopMatrix_AI(int* fp)//81EB0
@@ -1712,7 +1723,7 @@ void iPopMatrix_AI(int* fp)//81EB0
 	RBK = a1[5];
 	GBK = a1[6];
 	BBK = a1[7];
-	fp[21] = (int)a1;
+	fp[21] = (uintptr_t)a1;
 }
 
 void erk_interpolated(struct ITEM_INFO* item /*s3*/, struct object_info* object /*s6*/, int s0, short* s2, long* s5, short* s7, int* fp)//81C60
@@ -1746,8 +1757,8 @@ void erk_interpolated(struct ITEM_INFO* item /*s3*/, struct object_info* object 
 
 	fp[34] = t0;
 	fp[35] = t1;
-	fp[32] = (int)v0;
-	fp[33] = (int)v1;
+	fp[32] = (uintptr_t)v0;
+	fp[33] = (uintptr_t)v1;
 
 	iTranslateXYZ2_AI(a0, a1, a2, a3, fp);
 	mRotSuperPackedYXZ_AI(fp);
@@ -1850,7 +1861,7 @@ void CalcAnimatingItem_ASM(struct ITEM_INFO* item /*s3*/, struct object_info* ob
 	short* s2;
 	int s4;
 	int at = 0;
-	int v0 = 0;
+	uintptr_t v0 = 0;
 	int* a2 = NULL;
 	int v1 = 0;
 	short* s7 = NULL;
@@ -1887,7 +1898,7 @@ void CalcAnimatingItem_ASM(struct ITEM_INFO* item /*s3*/, struct object_info* ob
 		a2 = (int*)fp[16];
 		v1 = fp[30];
 		((short*)a2)[0] = v0;
-		a2[1] = (int)item;
+		a2[1] = (uintptr_t)item;
 		a2[2] = v1;
 		s2 = (short*)item->data;
 		//s1 = 1
@@ -2026,7 +2037,7 @@ void stash_the_info(int meshp/*a0*/, int* fp)//81750
 	at += 9;
 
 	fp[19]++;
-	fp[17] = (int)at;
+	fp[17] = (uintptr_t)at;
 }
 
 void init_scratchpad(int* fp)//8281C(<) (F)
@@ -2040,7 +2051,7 @@ void init_scratchpad(int* fp)//8281C(<) (F)
 	int t6;
 	int t7;
 	int* at = &fp[47];
-	fp[20] = (int)at;
+	fp[20] = (uintptr_t)at;
 
 	t0 = (R11 & 0xFFFF) | ((R12 & 0xFFFF) << 16);
 	t1 = (R13 & 0xFFFF) | ((R21 & 0xFFFF) << 16);
@@ -2060,16 +2071,16 @@ void init_scratchpad(int* fp)//8281C(<) (F)
 	at[6] = t6;
 	at[7] = t7;
 
-	fp[16] = (int)&stashed_objects_list[0];
-	fp[17] = (int)&stashed_matrix_list[0];
+	fp[16] = (uintptr_t)&stashed_objects_list[0];
+	fp[17] = (uintptr_t)&stashed_matrix_list[0];
 	fp[18] = 0;
-	fp[24] = (int)&items[0];
-	fp[38] = (int)&room[0];
+	fp[24] = (uintptr_t)&items[0];
+	fp[38] = (uintptr_t)&room[0];
 
 	((short*)fp)[53] = camera.pos.room_number;
-	fp[39] = (int)anims;
-	fp[40] = (int)meshes;
-	fp[41] = (int)bones;
+	fp[39] = (uintptr_t)anims;
+	fp[40] = (uintptr_t)meshes;
+	fp[41] = (uintptr_t)bones;
 
 	t0 = ((int*)MatrixStack)[5];
 	t1 = ((int*)MatrixStack)[6];
@@ -2114,7 +2125,7 @@ void CalcAllAnimatingItems_ASM()//82640, 84684
 		{
 			r = &room[draw_rooms[i]];
 			((short*)fp)[52] = draw_rooms[i];
-			((int*)fp)[25] = (int)r;
+			((int*)fp)[25] = (uintptr_t)r;
 			mmPushMatrix_AI(fp);
 
 			if (r->num_meshes > 0)
@@ -2147,10 +2158,10 @@ void CalcAllAnimatingItems_ASM()//82640, 84684
 							a2 = (int*)fp[16];
 							fp[18]++;
 							((short*)a2)[0] = v0;
-							((int*)a2)[1] = (int)&r->mesh[j];
+							((int*)a2)[1] = (uintptr_t)&r->mesh[j];
 							((short*)a2)[1] = 0;
 							a2 += 3;
-							fp[16] = (int)a2;
+							fp[16] = (uintptr_t)a2;
 							v1 = s5->mesh_number;
 							v0 = fp[40];
 
@@ -2176,6 +2187,7 @@ void CalcAllAnimatingItems_ASM()//82640, 84684
 					//v1 = r->item_number << 4	
 					//v1 = item->object_number
 					//s6 = objects
+					extern struct object_info* objects; // Ensure objects is declared
 					object = &objects[item->object_number];
 
 					//v0 = object->using_drawanimating_item

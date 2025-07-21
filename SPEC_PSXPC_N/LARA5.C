@@ -781,11 +781,11 @@ int* sub_658L5(short* meshp, int* s5/*db.polyptr*/, int s6/*ot*/)
         v0--;
 
         t8 = (t1 >> 13) & 0x7F8;
-        t8 += (int)a0;
+        t8 += (uintptr_t)a0;
         t7 = (t1 >> 5) & 0x7F8;
-        t7 += (int)a0;
+        t7 += (uintptr_t)a0;
         t6 = (t1 << 3) & 0x7F8;
-        t6 += (int)a0;
+        t6 += (uintptr_t)a0;
 
         SXY0 = ((int*)t6)[0];
         SXY1 = ((int*)t7)[0];
@@ -812,7 +812,7 @@ int* sub_658L5(short* meshp, int* s5/*db.polyptr*/, int s6/*ot*/)
 
         if (at >= 0)
         {
-            t5 += (int)a22;
+            t5 += (uintptr_t)a22;
             t1 = SXY0;
             t2 = SXY1;
             t3 = SXY2;
@@ -907,18 +907,18 @@ int* sub_658L5(short* meshp, int* s5/*db.polyptr*/, int s6/*ot*/)
         t9 = t1 >> 21;
         t8 = t1 >> 13;
         t8 &= 0x7F8;
-        t8 += (int)a0;
+        t8 += (uintptr_t)a0;
         t7 = t1 >> 5;
         t7 &= 0x7F8;
-        t7 += (int)a0;
+        t7 += (uintptr_t)a0;
         t6 = t1 << 3;
         t6 &= 0x7F8;
-        t6 += (int)a0;
+        t6 += (uintptr_t)a0;
         SXY0 = ((int*)t6)[0];
         SXY1 = ((int*)t7)[0];
         SXY2 = ((int*)t8)[0];
         t9 &= 0x7F8;
-        t9 += (int)a0;
+        t9 += (uintptr_t)a0;
         docop2(0x1400006);
         t6 = ((int*)t6)[1];
         t7 = ((int*)t7)[1];
@@ -953,7 +953,7 @@ int* sub_658L5(short* meshp, int* s5/*db.polyptr*/, int s6/*ot*/)
                     if ((t1 >> 16) < 0xF0 || (t2 >> 16) < 0xF0 || (t3 >> 16) < 0xF0 || (t4 >> 16) < 0xF0)
                     {
                         //loc_AEC
-                        t5 += (int)a22;
+                        t5 += (uintptr_t)a22;
                         t2 = t9 >> 7;
                         t1 = OTZ;
                         t2 &= a33;
@@ -1060,9 +1060,9 @@ void sub_1184L5()
             sub_1244L5(s1->pos.y_rot, s1->pos.x_rot, s1->pos.z_rot);
             a0 = &objects[s1->object_number];
 #if defined(USE_32_BIT_ADDR)
-            db.polyptr = (char*)sub_658L5((short*)((int*)meshes[a0->mesh_index])[0], (int*)db.polyptr, (int)db.ot);
+            db.polyptr = (char*)sub_658L5((short*)((int*)meshes[a0->mesh_index])[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-            db.polyptr = (char*)sub_658L5((short*)((int*)meshes[a0->mesh_index])[0], (int*)db.polyptr, (int)db.ot);
+            db.polyptr = (char*)sub_658L5((short*)((int*)meshes[a0->mesh_index])[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
 
             t0 = scratchPad[128];
@@ -1194,9 +1194,9 @@ void sub_E38L5()
         sub_CBCL5(h->pos.x_rot);
         h += 2;
 #if defined(USE_32_BIT_ADDR)
-        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
 
         //t0 = &tsv_buffer[0]
@@ -1252,9 +1252,9 @@ void sub_E38L5()
         sub_10DCL5(s2, s2 + 0x1D);
         sub_C6CL5(s2 + 0x1D);
 #if defined(USE_32_BIT_ADDR)
-        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
 
         s2 += 2;
@@ -1413,9 +1413,9 @@ void sub_2CL5(struct ITEM_INFO* item)
         if ((lara_item->mesh_bits >> 16)& (1 << 0xF))
         {
 #if defined(USE_32_BIT_ADDR)
-            db.polyptr = (char*)sub_658L5(lara.mesh_ptrs[lara_mesh_sweetness_table[i]], (int*)db.polyptr, (int)(db.ot + 1 * 2));
+            db.polyptr = (char*)sub_658L5(lara.mesh_ptrs[lara_mesh_sweetness_table[i]], (int*)db.polyptr, (uintptr_t)(db.ot + 1 * 2));
 #else
-            db.polyptr = (char*)sub_658L5(lara.mesh_ptrs[lara_mesh_sweetness_table[i]], (int*)db.polyptr, (int)(db.ot + 1));
+            db.polyptr = (char*)sub_658L5(lara.mesh_ptrs[lara_mesh_sweetness_table[i]], (int*)db.polyptr, (uintptr_t)(db.ot + 1));
 #endif
         }//loc_1FC
 
@@ -1551,9 +1551,9 @@ void sub_2CL5(struct ITEM_INFO* item)
             }//loc_408
 
 #if defined(USE_32_BIT_ADDR)
-            db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)(db.ot + 1 * 2));
+            db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)(db.ot + 1 * 2));
 #else
-            db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (int)(db.ot + 1));
+            db.polyptr = (char*)sub_658L5((short*)((int*)s1)[0], (int*)db.polyptr, (uintptr_t)(db.ot + 1));
 #endif
         }
         //loc_410
@@ -1610,9 +1610,9 @@ void sub_2CL5(struct ITEM_INFO* item)
 
         ///@FIXME for some reason at index 0 it wont draw left holster!
 #if defined(USE_32_BIT_ADDR)
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
         s0 += 8;
 
@@ -1646,9 +1646,9 @@ void sub_2CL5(struct ITEM_INFO* item)
 
         ///@FIXME for some reason at index 0 it wont draw right holster!
 #if defined(USE_32_BIT_ADDR)
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[0], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
     }
     //loc_538
@@ -1694,9 +1694,9 @@ void sub_2CL5(struct ITEM_INFO* item)
         sub_1358L5(bone[53], bone[54], bone[55]);
         ///@FIXME for some reason at index 0 it wont draw back gun!
 #if defined(USE_32_BIT_ADDR)
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[28], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[28], (int*)db.polyptr, (uintptr_t)db.ot);
 #else
-        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[28], (int*)db.polyptr, (int)db.ot);
+        db.polyptr = (char*)sub_658L5((short*)((int*)s0)[28], (int*)db.polyptr, (uintptr_t)db.ot);
 #endif
 
     }

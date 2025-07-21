@@ -1,0 +1,21 @@
+{
+    "files.associations": {
+        "ANIMITEM.C": "cpp",
+        "CALCHAIR.C": "cpp",
+        "CALCLARA.C": "cpp",
+        "DELTAPAK_S.C": "cpp",
+        "DRAWOBJ.C": "cpp",
+        "LARA1.C": "cpp",
+        "LARA2.C": "cpp",
+        "LARA3.C": "cpp",
+        "LARA4.C": "cpp",
+        "LARA5.C": "cpp",
+        "LIGHT.C": "cpp",
+        "MATHS.C": "cpp",
+        "ROOMLET1.C": "cpp",
+        "ROOMLET2.C": "cpp",
+        "ROOMLET3.C": "cpp",
+        "ROOMLET4.C": "cpp",
+        "ROOMLETB.C": "cpp"
+    }
+}

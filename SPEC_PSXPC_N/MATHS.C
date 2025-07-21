@@ -1248,7 +1248,7 @@ void mmPushMatrix(int* fp)//81BBC(<) (F)
 	a0[6] = t6;
 	a0[7] = t7;
 
-	fp[20] = (int)a0;
+	fp[20] = (uintptr_t)a0;
 }
 
 void SetRoomBounds(struct tr_room_portal* portal, int room_number, struct room_info* parent)

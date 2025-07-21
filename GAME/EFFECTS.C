@@ -35,6 +35,7 @@
 #if !SAT_VERSION
 #include <string.h>
 #include <stddef.h>
+#include <stdint.h>
 #endif
 
 #if PSX_VERSION || PSXPC_VERSION || SAT_VERSION
@@ -243,7 +244,8 @@ static void ClearSpiders()// (F)
 {
 	if (objects[SPIDER].loaded)
 	{
-		memset((char*)&Spiders, 0, 64 * sizeof(struct SPIDER_STRUCT));
+		Spiders = (struct SPIDER_STRUCT*)malloc(64 * sizeof(struct SPIDER_STRUCT));
+		memset(Spiders, 0, 64 * sizeof(struct SPIDER_STRUCT));
 		next_spider = 0;
 		flipeffect = -1;
 	}
@@ -931,7 +933,8 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 			return 0;
 		}
 
-		unsigned int s5 = (unsigned int)&sample_infos[sample_lut[sample_index]];
+
+		uintptr_t s5 = (uintptr_t)&sample_infos[sample_lut[sample_index]];
 		//t1 = sample_infos[sample_lut[sample_index]].randomness
 		//t0 = sample_infos[sample_lut[sample_index]].radius
 		//t2 = sample_infos[sample_lut[sample_index]].flags
@@ -1121,7 +1124,7 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 			//loc_91B2C
 			do
 			{
-				v0 = ((unsigned int*)s5)[4];
+				unsigned int v0 = ((unsigned int*)s5)[4];
 
 				if (v0 == sample_lut[sample_index])
 				{
@@ -1141,7 +1144,7 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 			//loc_91B6C
 			do
 			{
-				v0 = ((unsigned int*)s5)[4];
+				v0 = ((unsigned int*)(uintptr_t)s5)[4];
 				if (v0 == sample_lut[sample_index])
 				{
 					S_SoundStopSample(s0);
@@ -1167,12 +1170,12 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 					if (v0 < s2)
 					{
 						//loc_91ACC
-						((unsigned int*)s5)[0] = s6;
-						((unsigned int*)s5)[1] = s2;
-						((unsigned int*)s5)[2] = s1;
-						((unsigned int*)s5)[3] = s4;
-						((unsigned int*)s5)[4] = sample_lut[sample_index];
-						((unsigned int*)s5)[5] = s3;
+						((unsigned int*)(uintptr_t)s5)[0] = s6;
+						((unsigned int*)(uintptr_t)s5)[1] = s2;
+						((unsigned int*)(uintptr_t)s5)[2] = s1;
+						((unsigned int*)(uintptr_t)s5)[3] = s4;
+						((unsigned int*)(uintptr_t)s5)[4] = sample_lut[sample_index];
+						((unsigned int*)(uintptr_t)s5)[5] = s3;
 
 						v0 = 0;
 						v1 = 0;
@@ -1185,9 +1188,9 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 							a0 = pos->z_pos;
 						}
 						//loc_91B00
-						((unsigned int*)s5)[6] = v0;
-						((unsigned int*)s5)[7] = v1;
-						((unsigned int*)s5)[8] = a0;
+						((unsigned int*)(uintptr_t)s5)[6] = v0;
+						((unsigned int*)(uintptr_t)s5)[7] = v1;
+						((unsigned int*)(uintptr_t)s5)[8] = a0;
 
 						return 1;
 					}
@@ -1221,14 +1224,14 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 
 		if (v0 >= 0)
 		{
-			s5 = (unsigned int)&LaSlot[v0];
+			s5 = (uintptr_t)&LaSlot[v0];
 			//loc_91ACC
-			((unsigned int*)s5)[0] = s6;
-			((unsigned int*)s5)[1] = s2;
-			((unsigned int*)s5)[2] = s1;
-			((unsigned int*)s5)[3] = s4;
-			((unsigned int*)s5)[4] = sample_lut[sample_index];
-			((unsigned int*)s5)[5] = s3;
+			((unsigned int*)(uintptr_t)s5)[0] = s6;
+			((unsigned int*)(uintptr_t)s5)[1] = s2;
+			((unsigned int*)(uintptr_t)s5)[2] = s1;
+			((unsigned int*)(uintptr_t)s5)[3] = s4;
+			((unsigned int*)(uintptr_t)s5)[4] = sample_lut[sample_index];
+			((unsigned int*)(uintptr_t)s5)[5] = s3;
 
 			v0 = 0;
 			v1 = 0;
@@ -1241,9 +1244,9 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 				a0 = pos->z_pos;
 			}
 			//loc_91B00
-			((unsigned int*)s5)[6] = v0;
-			((unsigned int*)s5)[7] = v1;
-			((unsigned int*)s5)[8] = a0;
+			((unsigned int*)(uintptr_t)s5)[6] = v0;
+			((unsigned int*)(uintptr_t)s5)[7] = v1;
+			((unsigned int*)(uintptr_t)s5)[8] = a0;
 
 			return 1;
 		}
@@ -1252,7 +1255,7 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 		if (v0 != -1)
 		{
 			v1 = (L11 & 0xFFFF) | ((L12 & 0xFFFF) << 16);
-			((unsigned int*)v1)[0] = arg2 >> 8;
+			((unsigned int*)(uintptr_t)v1)[0] = arg2 >> 8;
 			return 0;
 		}
 		else
@@ -1261,20 +1264,21 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 			v0 = 0;
 			a1 = 0x8000000;
 			a2 = -1;
-			unsigned int* a33 = (unsigned int*)&LaSlot[1];
+			SoundSlot *a33 = &LaSlot[1];
 			int t0 = 1;
 
 			//loc_91C1C
 			do
 			{
-				v0 = a33[4];
-				v1 = a33[1];
+				v0 = a33[4].nSampleInfo;
+				v1 = a33[1].OrigVolume;
+
 
 				if (v0 >= 0 && a1 >= v1)
 				{
 					a1 = v1;
 					a2 = t0;
-					s5 = (unsigned int)a33;
+					s5 = (uintptr_t)a33;
 				}
 
 				a33 += 9;
@@ -1288,7 +1292,7 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 
 			S_SoundStopSample(a2);
 
-			((unsigned int*)s5)[4] = -1;
+			((unsigned int*)(uintptr_t)s5)[4] = -1;
 			v0 = (L22 & 0xFFFF) | ((L23 & 0xFFFF) << 16);
 			int a0 = (L13 & 0xFFFF) | ((L21 & 0xFFFF) << 16);
 			a1 = s2 & 0xFFFF;
@@ -1306,15 +1310,16 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 
 			if (a0 >= 0)
 			{
-				s5 = (unsigned int)&LaSlot[a0];
+				uintptr_t s5 = (uintptr_t)&LaSlot[a0];
 
-				//loc_91ACC
-				((unsigned int*)s5)[0] = s6;
-				((unsigned int*)s5)[1] = s2;
-				((unsigned int*)s5)[2] = s1;
-				((unsigned int*)s5)[3] = s4;
-				((unsigned int*)s5)[4] = sample_lut[sample_index];
-				((unsigned int*)s5)[5] = s3;
+				// loc_91ACC
+				((unsigned int*)(uintptr_t)s5)[0] = s6;
+				((unsigned int*)(uintptr_t)s5)[1] = s2;
+				((unsigned int*)(uintptr_t)s5)[2] = s1;
+				((unsigned int*)(uintptr_t)s5)[3] = s4;
+				((unsigned int*)(uintptr_t)s5)[4] = sample_lut[sample_index];
+				((unsigned int*)(uintptr_t)s5)[5] = s3;
+
 
 				v0 = 0;
 				v1 = 0;
@@ -1327,9 +1332,10 @@ long SoundEffect(short sample_index, struct PHD_3DPOS* pos, int arg2)//91780(<),
 					a0 = pos->z_pos;
 				}
 				//loc_91B00
-				((unsigned int*)s5)[6] = v0;
-				((unsigned int*)s5)[7] = v1;
-				((unsigned int*)s5)[8] = a0;
+				((unsigned int*)(uintptr_t)s5)[6] = v0;
+				((unsigned int*)(uintptr_t)s5)[7] = v1;
+				((unsigned int*)(uintptr_t)s5)[8] = a0;
+
 
 				return 1;
 			}

@@ -16,6 +16,7 @@
 #include "CONTROL.H"
 #include "LOAD_LEV.H"
 #include "MATHS.H"
+#include <stdint.h>
 
 long phd_sqrt_asm_CH(long value)//83B30(<), 85B74(<) (F)
 {
@@ -451,7 +452,7 @@ void mRotSuperPackedYXZ_CH(int* fp, int a1)
 	at = v0 >> 14;
 	if (at-- != 0)
 	{
-		fp[10] = (int)a2;
+		fp[10] = (uintptr_t)a2;
 
 		if (at-- != 0)
 		{
@@ -470,7 +471,7 @@ void mRotSuperPackedYXZ_CH(int* fp, int a1)
 	}
 	//loc_83AEC
 	at = *a2++;
-	fp[10] = (int)a2;
+	fp[10] = (uintptr_t)a2;
 	v0 <<= 16;
 	v0 |= at;
 
@@ -610,7 +611,7 @@ void HairControl(int unk01, int bIsYoungLara, short* frame)
 	R32 = 0;
 	R33 = 4096;
 
-	fp[10] = (int)&hit_frame[9];
+	fp[10] = (uintptr_t)&hit_frame[9];
 
 	TRX = lara_item->pos.x_pos;
 	TRY = lara_item->pos.y_pos;
