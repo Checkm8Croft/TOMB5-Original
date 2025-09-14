@@ -1,8 +1,5 @@
 /Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/CMakeFiles/edit_cache.dir
 /Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/CMakeFiles/rebuild_cache.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/EMULATOR/CMakeFiles/Emulator_.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/EMULATOR/CMakeFiles/edit_cache.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/EMULATOR/CMakeFiles/rebuild_cache.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PSXPC_N/CMakeFiles/TombRaiderChronicles_PSXPC_N.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PSXPC_N/CMakeFiles/edit_cache.dir
-/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PSXPC_N/CMakeFiles/rebuild_cache.dir
+/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PC_N/CMakeFiles/TombRaiderChronicles_PCNew.dir
+/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PC_N/CMakeFiles/edit_cache.dir
+/Users/checkm8/Desktop/Projects/C++/TOMB5-Original/build/SPEC_PC_N/CMakeFiles/rebuild_cache.dir
